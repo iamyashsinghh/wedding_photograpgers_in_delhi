@@ -57,7 +57,7 @@ export default function App({ Component, pageProps }) {
             zIndex: '99999999',
           }}
         >
-          <Image alt='weddingbanquets whatsapp' src="https://i.ibb.co/VgSspjY/whatsapp-button.png" width={55} height={55}></Image>
+          <Image alt='weddingphotographersindelhi whatsapp' src="https://i.ibb.co/VgSspjY/whatsapp-button.png" width={55} height={55}></Image>
         </a>
         <Component {...pageProps} />
       </Layout>
