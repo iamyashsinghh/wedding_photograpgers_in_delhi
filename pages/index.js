@@ -42,7 +42,7 @@ function Venue(props) {
           }
         />
         <meta name="twitter:site" content="@yourtwitterhandle" />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData2) }} />
+        {/* <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData2) }} /> */}
       </Head>
           <VendorListPage data={{ ...props, localities }} />
           <FooterVendors />
