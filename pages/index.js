@@ -1,9 +1,12 @@
 import { useEffect } from 'react';
-import Head from 'next/head';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useGlobalContext } from '@/context/MyContext';
-import FooterVendors from '@/components/miscellaneous/footer/FooterVendors';
-import VendorListPage from '@/components/vendor/vendorlistpage/VendorListPage';
+
+// Dynamically import components
+const Head = dynamic(() => import('next/head'));
+const VendorListPage = dynamic(() => import('@/components/vendor/vendorlistpage/VendorListPage'));
+const FooterVendors = dynamic(() => import('@/components/miscellaneous/footer/FooterVendors'));
 
 function Venue(props) {
   const { setSelectedCity, localities } = useGlobalContext();
@@ -15,7 +18,6 @@ function Venue(props) {
     }
   }, [props.city]);
 
-
   return (
     <>
       <Head>
@@ -25,7 +27,9 @@ function Venue(props) {
         <link rel="canonical" href={`https://weddingphotographersindelhi.com${router.asPath}`} />
         <meta property="og:title" content={props.result.meta?.meta_title} />
         <meta property="og:description" content={props.result.meta?.meta_description} />
-        <meta property="og:image" content={
+        <meta 
+          property="og:image" 
+          content={
             props.result && props.result.data && props.result.data.length > 0 && props.result.data[0].images
               ? `${process.env.MEDIA_PREFIX || '/default/prefix'}/${props.result.data[0].images.split(',')[0]}`
               : 'https://weddingphotographersindelhi.com/twitter-img.png'
@@ -35,27 +39,33 @@ function Venue(props) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={props.result.meta?.meta_title} />
         <meta name="twitter:description" content={props.result.meta?.meta_description} />
-        <meta name="twitter:image" content={
+        <meta 
+          name="twitter:image" 
+          content={
             props.result && props.result.data && props.result.data.length > 0 && props.result.data[0].images
               ? `${process.env.MEDIA_PREFIX || '/default/prefix'}/${props.result.data[0].images.split(',')[0]}`
               : 'https://weddingphotographersindelhi.com/twitter-img.png'
           }
         />
         <meta name="twitter:site" content="@yourtwitterhandle" />
-        {/* <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdData2) }} /> */}
       </Head>
-          <VendorListPage data={{ ...props, localities }} />
-          <FooterVendors />
+      <VendorListPage data={{ ...props, localities }} />
+      <FooterVendors />
     </>
   );
 }
 
-export async function getServerSideProps({ query, req, res }) {
+export async function getServerSideProps({ query }) {
   try {
     const locality = 'all';
     const city = 'delhi';
     const category = 'best-wedding-photographers';
-    const { guest, per_plate, per_budget, multi_localities, search_value, makeup_bridal_budget, makeup_occasion, photographer_service, photographer_service_budget, mehndi_package_budget, banquet_decor_package_budget, home_decor_package_budget, band_baja_ghodiwala_budget, photographer_occation, makeup_service, experience, events_completed, days} = query;
+    const {
+      guest, per_plate, per_budget, multi_localities, search_value, makeup_bridal_budget, 
+      makeup_occasion, photographer_service, photographer_service_budget, mehndi_package_budget, 
+      banquet_decor_package_budget, home_decor_package_budget, band_baja_ghodiwala_budget, 
+      photographer_occation, makeup_service, experience, events_completed, days
+    } = query;
 
     const filterQuery = {
       guest: guest || "",
@@ -78,7 +88,7 @@ export async function getServerSideProps({ query, req, res }) {
       events_completed: events_completed || "",
       days: days || ""
     };
-    
+
     const url = `${process.env.SERVER_DOMAIN}/api/venue_or_vendor_list/${category}/${city}/${locality}?guest=${filterQuery.guest}&per_plate=${filterQuery.per_plate}&per_budget=${filterQuery.per_budget}&multi_localities=${filterQuery.multi_localities}&search_value=${filterQuery.search_value}&locality=${filterQuery.locality}&makeup_service=${filterQuery.makeup_service}&makeup_bridal_budget=${filterQuery.makeup_bridal_budget}&makeup_occasion=${filterQuery.makeup_occasion}&photographer_service=${filterQuery.photographer_service}&photographer_service_budget=${filterQuery.photographer_service_budget}&mehndi_package_budget=${filterQuery.mehndi_package_budget}&banquet_decor_package_budget=${filterQuery.banquet_decor_package_budget}&home_decor_package_budget=${filterQuery.home_decor_package_budget}&band_baja_ghodiwala_budget=${filterQuery.band_baja_ghodiwala_budget}&photographer_occation=${filterQuery.photographer_occation}&experience=${filterQuery.experience}&events_completed=${filterQuery.events_completed}&days=${filterQuery.days}`;
     const getlocalitiesURL = `${process.env.SERVER_DOMAIN}/api/locations/${city}`;
 
