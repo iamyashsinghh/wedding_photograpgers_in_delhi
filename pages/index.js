@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { useGlobalContext } from '@/context/MyContext';
 
-// Dynamically import components
 const Head = dynamic(() => import('next/head'));
 const VendorListPage = dynamic(() => import('@/components/vendor/vendorlistpage/VendorListPage'));
 const FooterVendors = dynamic(() => import('@/components/miscellaneous/footer/FooterVendors'));
@@ -17,7 +16,6 @@ function Venue(props) {
       setSelectedCity(props.city);
     }
   }, [props.city]);
-
   return (
     <>
       <Head>
