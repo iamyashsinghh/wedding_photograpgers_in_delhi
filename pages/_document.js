@@ -15,7 +15,6 @@ function MyDocument(props) {
   );
 }
 
-//Using this to rendder the styled component css on the server, Otherwise our css will only apply on client side.z
 MyDocument.getInitialProps = async (ctx) => {
   const sheet = new ServerStyleSheet();
   const originalRenderPage = ctx.renderPage;
