@@ -172,7 +172,7 @@ function WeddingPhotographers() {
             <p>Find amazing wedding photographers for your special day!</p>
           </div>
           <Image
-            src="/wedding-photographers/weddingphotogra.png"
+            src="/wedding-photographers/wedding.jpg"
             alt="Wedding Photographers Banner"
             layout="fill"
             objectFit="cover"
